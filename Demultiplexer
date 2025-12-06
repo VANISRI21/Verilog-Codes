@@ -1,0 +1,27 @@
+// Design Code Demultiplexer
+module demux(I,S,Y0,Y1);
+  input I,S ;
+  output Y0,Y1 ;
+  wire W1 ;
+  and (Y1,I,S);
+  not (W2,S);
+  and (Y0,W2,I);
+endmodule
+// Test bench code 
+module demultiplexer ;
+  reg I,S ;
+  wire Y ;
+  demux uut (.I(I), .S(S) ,.Y0(Y0), .Y1(Y1));
+  integer i ;
+  initial 
+    begin 
+      $display(" I S  :  Y0 Y1");
+      for (i = 0;i<4;i++)
+      begin
+        {I,S}=i[1:0];
+        #2;
+         $display(" %b %b  :  %b  %b ",I,S,Y0,Y1);
+      end 
+      $stop ;
+    end 
+endmodule
