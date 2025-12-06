@@ -1,0 +1,35 @@
+// Design Code for 2 to 4 Decoder
+module decoder (Y1,Y2,I0,I1,I2,I3);
+  input Y1,Y2 ;
+  output I0,I1,I2,I3 ;
+  wire W1,W2 ;
+  not(W1,Y1);
+  not(W2,Y2);
+  and(I0,W1,W2);
+  and (I1,Y1,W2);
+  and (I2,Y2,W1);
+  and (I3,Y1,Y2);
+endmodule
+// Test bench code
+module deco ;
+  reg Y1,Y2 ;
+  wire I0,I1,I2,I3 ;
+  decoder uut (.Y1(Y1), .Y2(Y2), .I0(I0), .I1(I1), .I2(I2), .I3(I3));
+  integer i ;
+  initial 
+    begin 
+      $display ("Y2 Y1 : I0 I1 I2 I3 ");
+      for (i=0;i<=3 ;i++)
+        begin 
+          {Y2,Y1}=i[1:0] ;
+          #2 ;
+          $display ("%b  %b  : %b  %b  %b  %b ",Y2,Y1,I0,I1,I2,I3);
+        end 
+      $stop ;
+    end 
+endmodule
+
+
+
+        
+  
