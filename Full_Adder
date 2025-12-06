@@ -1,0 +1,24 @@
+//Design Code for full adder
+module halfadder(a,b,sum,carry);
+  input a,b;
+  output sum , carry ;
+  xor g1(sum,a,b);
+  or g2(carry ,a,b);
+endmodule
+//Test bench code
+module ha ;
+  reg a ,b;
+  wire sum , carry;
+  halfadder uut (.a(a) , .b(b) , .sum(sum) , .carry(carry));
+  integer i ;
+  initial
+  begin 
+    $display("A B  :  SUM CARRY ");
+             for (i=0;i<4 ;i++)
+               begin
+                 {a,b}=i;
+                 #2;
+                 $display(" %b %b  :  %b   %b",a ,b,  sum, carry);
+               end $stop ;
+             end
+endmodule
