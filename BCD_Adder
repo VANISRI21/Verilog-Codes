@@ -1,0 +1,67 @@
+//Design code 4 bit BCD Adder 
+// Code your design here
+module BCD_adder(A,B,Cin,Cout,S);
+  input Cin;
+  input [3:0]A,B;
+  output reg Cout;
+  output reg [3:0]S;
+  reg [4:0]Z;
+  always@(*)
+    begin
+      Z=A+B+Cin;
+      if (Z>9)
+        begin
+          Z=Z+6;
+          Cout=1;
+          S=Z[3:0];
+        end
+      else begin
+        Cout=0;
+        S=Z[3:0];
+      end
+    end
+endmodule
+
+//Test bench code for 
+// Code your testbench here
+// or browse Examples
+module tb_bcd();
+  reg Cin;
+  reg [3:0]A,B;
+  wire Cout;
+  wire [3:0]S;
+  //wire [4:0]Z;
+  BCD_adder uut(.A(A), .B(B), .Cin(Cin), .Cout(Cout), .S(S));
+  initial
+    begin
+      integer i,j;
+      Cin=0;
+      $display("A B Cin  |  S  Cout ");
+      for(i=0;i<10;i++)
+        begin
+          for(j=0;j<10;j++)
+            begin
+              A=i[3:0];
+              B=j[3:0];
+              #1;
+              $display("%2d %2d %d  %1d %2d",A,B,Cin,Cout,S);
+            end
+        end
+        end
+      initial begin 
+    $dumpfile("comp.vcd");
+    $dumpvars(1);
+  end
+      
+   
+endmodule
+
+              
+              
+              
+              
+              
+              
+              
+              
+          
