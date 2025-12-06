@@ -1,0 +1,44 @@
+// Design code for Dec counter
+module decounter(output [3:0] q,input clk,j,k);
+ 
+  wire r=0;
+  jkff g1(.q(q[0]), .j(j), .k(k), .clk(clk), .r(r));
+  jkff g2(.q(q[1]), .j(j), .k(k), .clk(q[0]), .r(r));
+  jkff g3(.q(q[2]), .j(j), .k(k), .clk(q[1]), .r(r));
+  jkff g4(.q(q[3]), .j(j), .k(k), .clk(q[2]), .r(r));
+  nand g5(r,q[1],q[3]);
+endmodule
+ 
+module jkff(output reg q,input j,k,clk,r);
+    
+    initial  begin
+    q=0;
+    end
+  always @(posedge clk) begin
+    if (r==1)
+      q<=0;
+    else begin
+      case({j,k})
+        2'b00:q<=q;
+        2'b01:q<=0;
+        2'b10:q<=1;
+        2'b11:q<=~q;
+      endcase
+    end
+  end
+  endmodule
+  // Test bench code
+module decounter_tb;
+  reg j ,k ,clk;
+  wire [3:0]q;
+  decounter uut(.q(q), .j(j), .clk(clk), .k(k));
+  initial begin 
+    clk=0;;
+    #2 j=1;k=1;
+  end
+    always #2 clk=~clk;
+  
+  initial $monitor($time ,"  j=%d,k=%d,q=%b,clk=%d ",j,k,q,clk);
+    initial #50 $stop;
+ 
+endmodule
