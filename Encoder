@@ -1,0 +1,32 @@
+// Design Code for Encoder
+module encoder (I1,I2,I3,Y1,Y2);
+  input I1,I2,I3 ;
+  output Y1,Y2 ;
+  wire W1, W2;
+  not(W1,I2);
+  and (W2,I1,W1);
+  or (Y1,I1,W2);
+  or ( Y2,I2,I3);
+endmodule
+// Test bench code
+module enco ;
+  reg I1,I2,I3 ,I4;
+  wire Y1,Y2 ;
+  encoder uut (.I1(I1), .I2(I2), .I3(I3) ,.Y1(Y1), .Y2(Y2));
+  integer i;
+  initial 
+    begin
+      $display ("I1  I2 I3 I4 : Y1  Y2" );
+      for (i=1;i<=16;i++)
+      begin 
+        {I1,I2,I3,I4}=i[3:0];
+        $display (" %b  %b  %b  %b  : %b   %b ",I1,I2,I3,I4,Y1,Y2);
+        //{I1,I2,I3,I4}=i[3:0];
+        #2;
+      end 
+      $stop ;
+    end
+endmodule
+        
+  
+  
