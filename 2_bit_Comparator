@@ -1,0 +1,35 @@
+// Design code for Comparator 
+// Code your design here
+module comparator(A,B,AlB,AeB,AgB);
+  input A,B ;
+  output AlB,AeB,AgB ;
+  wire W1,W2,W3,W4 ;
+  not (W1,A);
+  not (W2,B);
+  and (W3,W1,W2);
+  and (W4,A,B);
+  and(AlB,W1,B);
+  or (AeB,W3,W4);
+  and (AgB,A,W2);
+endmodule
+
+// Test bench code 
+// Code your testbench here
+// or browse Examples
+module comp ;
+  reg A,B ;
+  wire AlB ,AeB ,AgB ;
+  comparator uut (.A(A), .B(B), .AlB(AlB), .AeB(AeB), .AgB(AgB));
+  integer i ;
+  initial 
+    begin 
+      $display ("A  B  : A<B A=B A>B ");
+      for (i=0;i<=3;i++)
+        begin 
+          {A,B}=i;
+          #2 ;
+          $display ("%b  %b :  %b   %b   %b ",A,B,AlB,AeB,AgB );
+        end
+      $stop ;
+      end
+endmodule 
