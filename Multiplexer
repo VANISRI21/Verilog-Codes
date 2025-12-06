@@ -1,0 +1,28 @@
+// Design code for Multiplexer
+module mult(S0,I0,I1,Y);
+  input I0,I1,S0;
+  output Y;
+  wire W1,W2,W3 ;
+  and g1(W1,S0,I1);
+  not g2(W2,S0);
+  and g3(W3,W2,I0);
+  or g4(Y,W1,W3);
+endmodule
+//Test bench code
+module mux ;
+  reg I0,I1,S0 ;
+  wire Y ;
+  mult uut ( .I0(I0), .I1(I1), .S0(S0),  .Y(Y));
+  integer i ;
+  initial 
+    begin 
+      $display ( "I0 I1 S0  :  Y ");
+      for (i=0;i<=7;i++)
+        begin
+          {I0,I1,S0}=i[2:0];
+          #2;
+          $display(" %b  %b  %b  :  %b  ",I0,I1,S0,Y);
+        end
+      $stop ;
+    end
+endmodule
