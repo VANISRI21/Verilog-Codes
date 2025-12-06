@@ -1,0 +1,26 @@
+// Design Code for Counter 
+module counter(input clk,input [2:0]N,output reg [2:0]count);
+  initial begin
+    count=0;
+     
+  end
+  always @(posedge clk) begin 
+    count=(count==N)?3'd0:count+1;
+  end
+endmodule
+//Test bench Code
+module counter_tb();
+  reg clk;
+  reg [2:0]N;
+  wire [2:0]count;
+  initial begin
+    clk=0;
+    N=3'd7;
+  end
+  always #1 clk=~clk;
+  counter uut(.clk(clk),  .N(N), .count(count));
+  initial begin
+    $monitor("%t count=%d", $time, count);
+    #20 $stop;
+  end
+endmodule
