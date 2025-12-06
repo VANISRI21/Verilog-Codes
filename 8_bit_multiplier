@@ -1,0 +1,52 @@
+//Design code for 8 bit multiplier
+
+module multiplier_8bit (a,b,p) ;
+input [7:0]a,b;
+output [15:0]p;
+wire [7:0]m0; //m1,m2,m3,m4,m5,m6,m7;
+wire [8:0]m1;
+wire [9:0]m2;
+wire [10:0]m3;
+wire [11:0]m4;
+wire [12:0]m5;
+wire [13:0]m6;
+wire [14:0]m7;
+wire [15:0]S1,S2,S3,S4,S5,S6,S7;
+assign m0= {8{b[0]}} & a[7:0];
+assign m1 ={8{b[1]}} & a[7:0];
+assign m2={8{b[2]}} & a[7:0];
+assign m3={8{b[3]}} & a[7:0];
+assign m4={8{b[4]}} & a[7:0];
+assign m5={8{b[5]}} & a[7:0];
+assign m6={8{b[6]}} & a[7:0];
+assign m7={8{b[7]}} & a[7:0];
+assign S1 =m0+(m1<<1);
+assign S2 = S1 +(m2<<2);
+assign S3= S2+(m3<<3);
+assign S4= S3+ (m4<<4);
+assign S5= S4+ (m5<<5);    
+assign S6 = S5+(m6<<6);
+assign S7= S6+(m7<<7);
+assign p=S7;
+endmodule
+
+// Test bench code
+module tb_8bitmult();
+  reg [7:0]A,B;
+  wire [15:0]R;
+  multiplier_8bit uut (.a(A), .b(B),.p(R));
+  initial
+    begin
+      A=8'd6; B=8'd2;
+      #1;
+      $display("A=%d , B = %d, P=%d",A,B,R);
+      A=2; B=1;
+      #1;
+      $display("A=%d , B = %d, P=%d",A,B,R);
+      A=6; B=4;
+      #1;
+      $display("A=%d , B = %d, P=%d",A,B,R);
+      #5;
+      $finish;
+    end
+endmodule
